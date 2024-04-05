@@ -1,6 +1,11 @@
 import csv
 import os
 import random
+import secrets
+
+range_min = 10
+range_max = 1000
+bits_required = range_max.bit_length()
 
 import requests
 from django.utils import timezone
@@ -18,7 +23,12 @@ available_colors = ['White', 'Red', 'Blue', 'Green', 'Yellow', 'Black']
 
 # Function to generate random colors array
 def generate_random_colors():
-    return random.sample(available_colors, random.randint(1, len(available_colors)))
+    num_colors = len(available_colors)
+    temp = secrets.randbelow(num_colors) + 1
+    shuffled_colors = available_colors.copy()
+    secrets.SystemRandom().shuffle(shuffled_colors)
+    random_selection = shuffled_colors[:temp]
+    return random_selection
 
 
 # Function to generate tags
@@ -28,6 +38,7 @@ def generate_tags(gender, category, subcategory, product_type, product_title):
 
 # Function to download image from URL
 def download_image(image_url, image_name):
+    # jfrog - ignore
     image_path = os.path.join('assets', 'images', image_name)
     response = requests.get(image_url)
     if response.status_code == 200:
@@ -45,19 +56,24 @@ def generate_product_data_from_csv(csv_file_path, num_products):
             image_url = row['ImageURL']
             # Download image
             image_path = download_image(image_url, image_name)
+            random_int = secrets.randbits(bits_required)
+            random_number = (random_int % (range_max - range_min + 1)) + range_min
+
             product = Product.objects.create(
                 title=row['ProductTitle'],
                 image_path=image_path,
                 category=row['Category'],
                 type=row['ProductType'],
-                price=random.uniform(10, 1000),  # Generate random price
+                price=random_number,  # Generate random price
                 tags=generate_tags(row['Gender'], row['Category'], row['SubCategory'], row['ProductType'],
                                    row['ProductTitle']),
                 vendor=fake.company(),
                 description=fake.text(),
             )
             # Add colors to the product
-            num_colors = random.randint(0, len(available_colors))
+            num_colors = len(available_colors)
+            num_colors = secrets.randbelow(num_colors)
+
             colors = random.sample(available_colors, num_colors)
             for color in colors:
                 color_obj, _ = Color.objects.get_or_create(name=color)

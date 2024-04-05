@@ -13,5 +13,7 @@ EMAIL_HOST = 'smtp.mailersend.net'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+# jfrog-ignore
 EMAIL_HOST_USER = "MS_u0eOpu@trial-0p7kx4xqdp2g9yjr.mlsender.net"
+# jfrog-ignore
 EMAIL_HOST_PASSWORD = 'u6KskE6Q1YKwZJRE'

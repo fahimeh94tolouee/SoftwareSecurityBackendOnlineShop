@@ -77,7 +77,6 @@ def registeredFailed(user):
 def register(request):
     """
     Registers user to the server. Input should be in the format:
-    {"email": "email", "password": "1234abcd"}
     """
     serializer = RegistrationSerializer(data=request.data)
     if serializer.is_valid():
@@ -91,7 +90,6 @@ def register(request):
 def login(request):
     """
     Registers user to the server. Input should be in the format:
-    {"email": "email", "password": "1234abcd"}
     """
     email = request.data.get('email')
     password = request.data.get('password')
