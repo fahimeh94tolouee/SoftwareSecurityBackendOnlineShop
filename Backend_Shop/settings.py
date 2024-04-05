@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # jfrog-ignore
-SECRET_KEY = 'django-insecure-cky2_ay4o-fg5dls=76ray3s(#p-tijqc%a22qq&csto-w-@l-'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
